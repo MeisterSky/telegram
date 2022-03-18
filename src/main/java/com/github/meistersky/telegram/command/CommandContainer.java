@@ -20,6 +20,9 @@ public class CommandContainer {
                 .put(STOP.getCommandName(), new StopCommand(sendBotMessageService))
                 .put(HELP.getCommandName(), new HelpCommand(sendBotMessageService))
                 .put(NO.getCommandName(), new NoCommand(sendBotMessageService))
+                .put(CREATE_GROUP.getCommandName(), new NoCommand(sendBotMessageService))
+                .put(ADD_TO_GROUP.getCommandName(), new NoCommand(sendBotMessageService))
+                .put(CALL_GROUP.getCommandName(), new NoCommand(sendBotMessageService))
                 .build();
 
         unknownCommand = new UnknownCommand(sendBotMessageService);
