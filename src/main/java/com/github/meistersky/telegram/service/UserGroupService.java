@@ -12,7 +12,7 @@ public interface UserGroupService {
 
     UserGroup save(Long chatId, String title, String users);
 
-    UserGroup save(UserGroup userGroup);
+    void save(UserGroup userGroup);
 
     Optional<UserGroup> findById(Integer id);
 

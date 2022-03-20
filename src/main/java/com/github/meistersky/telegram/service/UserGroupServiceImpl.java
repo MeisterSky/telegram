@@ -30,12 +30,13 @@ public class UserGroupServiceImpl implements UserGroupService {
         userGroup.setChatId(chatId);
         userGroup.setTitle(title);
         userGroup.setUsers(users);
+        this.save(userGroup);
         return userGroup;
     }
 
     @Override
-    public UserGroup save(UserGroup userGroup) {
-        return null;
+    public void save(UserGroup userGroup) {
+        userGroupRepository.save(userGroup);
     }
 
     @Override

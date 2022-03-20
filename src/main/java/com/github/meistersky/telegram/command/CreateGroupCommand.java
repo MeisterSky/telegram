@@ -33,7 +33,7 @@ public class CreateGroupCommand implements Command {
             sb.append(stringArray[i]).append(" ");
         }
         String users = sb.toString();
-        UserGroup userGroup = userGroupService.save(chatId, groupTitle, users);
+        userGroupService.save(chatId, groupTitle, users);
     }
 
     public CreateGroupCommand(SendBotMessageService sendBotMessageService, TelegramUserService telegramUserService,
