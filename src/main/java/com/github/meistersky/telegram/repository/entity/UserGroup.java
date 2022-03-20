@@ -13,8 +13,9 @@ import javax.persistence.*;
 public class UserGroup {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "chat_id")
     private Long chatId;
