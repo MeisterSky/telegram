@@ -2,6 +2,9 @@ package com.github.meistersky.telegram.bot;
 
 import com.github.meistersky.telegram.command.CommandContainer;
 import com.github.meistersky.telegram.service.SendBotMessageServiceImpl;
+import com.github.meistersky.telegram.service.TelegramUserService;
+import com.github.meistersky.telegram.service.UserGroupService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -22,8 +25,11 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private final CommandContainer commandContainer;
 
-    public TelegramBot() {
-        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this));
+    @Autowired
+    public TelegramBot(TelegramUserService telegramUserService, UserGroupService userGroupService) {
+        this.commandContainer =
+                new CommandContainer(new SendBotMessageServiceImpl(this),
+                        telegramUserService, userGroupService);
     }
 
     @Override
@@ -33,9 +39,9 @@ public class TelegramBot extends TelegramLongPollingBot {
             if (message.startsWith(COMMAND_PREFIX)) {
                 String commandIdentifier = message.split(" ")[0].toLowerCase();
 
-                commandContainer.retrieveCommand(commandIdentifier).execute(update);
+                commandContainer.findCommand(commandIdentifier).execute(update);
             } else {
-                commandContainer.retrieveCommand(NO.getCommandName()).execute(update);
+                commandContainer.findCommand(NO.getCommandName()).execute(update);
             }
         }
     }

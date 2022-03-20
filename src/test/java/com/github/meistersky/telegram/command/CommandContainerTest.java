@@ -1,6 +1,8 @@
 package com.github.meistersky.telegram.command;
 
 import com.github.meistersky.telegram.service.SendBotMessageService;
+import com.github.meistersky.telegram.service.TelegramUserService;
+import com.github.meistersky.telegram.service.UserGroupService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +19,9 @@ class CommandContainerTest {
     @BeforeEach
     public void init() {
         SendBotMessageService sendBotMessageService = Mockito.mock(SendBotMessageService.class);
-        commandContainer = new CommandContainer(sendBotMessageService);
+        TelegramUserService telegramUserService = Mockito.mock(TelegramUserService.class);
+        UserGroupService userGroupService = Mockito.mock(UserGroupService.class);
+        commandContainer = new CommandContainer(sendBotMessageService, telegramUserService, userGroupService);
     }
 
     @Test
@@ -25,7 +29,7 @@ class CommandContainerTest {
         //when-then
         Arrays.stream(CommandName.values())
                 .forEach(commandName -> {
-                    Command command = commandContainer.retrieveCommand(commandName.getCommandName());
+                    Command command = commandContainer.findCommand(commandName.getCommandName());
                     Assertions.assertNotEquals(UnknownCommand.class, command.getClass());
                 });
     }
@@ -36,7 +40,7 @@ class CommandContainerTest {
         String unknownCommand = "/abrakadabra";
 
         //when
-        Command command = commandContainer.retrieveCommand(unknownCommand);
+        Command command = commandContainer.findCommand(unknownCommand);
 
         //then
         Assertions.assertEquals(UnknownCommand.class, command.getClass());

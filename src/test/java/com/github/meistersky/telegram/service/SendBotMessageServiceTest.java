@@ -12,29 +12,29 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class SendBotMessageServiceTest {
 
     private SendBotMessageService sendBotMessageService;
-    private TelegramBot bot;
+    private TelegramBot javarushBot;
 
     @BeforeEach
     public void init() {
-        bot = Mockito.mock(TelegramBot.class);
-        sendBotMessageService = new SendBotMessageServiceImpl(bot);
+        javarushBot = Mockito.mock(TelegramBot.class);
+        sendBotMessageService = new SendBotMessageServiceImpl(javarushBot);
     }
 
     @Test
     public void shouldProperlySendMessage() throws TelegramApiException {
         //given
-        String chatId = "test_chat_id";
+        Long chatId = 123L;
         String message = "test_message";
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setText(message);
-        sendMessage.setChatId(chatId);
+        sendMessage.setChatId(chatId.toString());
         sendMessage.enableHtml(true);
 
         //when
         sendBotMessageService.sendMessage(chatId, message);
 
         //then
-        Mockito.verify(bot).execute(sendMessage);
+        Mockito.verify(javarushBot).execute(sendMessage);
     }
 }

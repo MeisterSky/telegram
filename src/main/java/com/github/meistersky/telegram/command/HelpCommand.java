@@ -14,11 +14,20 @@ public class HelpCommand implements Command {
 
     public static final String HELP_MESSAGE = String.format("✨<b>Доступные команды</b>✨\n\n"
 
-                    + "<b>Начать\\закончить работу с ботом</b>\n"
-                    + "%s - начать работу со мной\n"
-                    + "%s - приостановить работу со мной\n\n"
-                    + "%s - получить помощь в работе со мной\n",
-            START.getCommandName(), STOP.getCommandName(), HELP.getCommandName());
+            + "<b>Начать\\закончить работу с ботом:</b>\n"
+            + START.getCommandName() + " - начать работу со мной\n"
+            + STOP.getCommandName() + " - приостановить работу со мной\n\n"
+            + "<b>Функциональные команды:</b>\n"
+            + CREATE_GROUP.getCommandName() + " - создать группу\n"
+            + DELETE_GROUP.getCommandName() + " - удалить группу\n"
+            + ADD_TO_GROUP.getCommandName() + " - добавить пользователя в группу\n"
+            + DELETE_FROM_GROUP.getCommandName() + " - удалить пользователя из группы\n"
+            + GET_GROUPS.getCommandName() + " - получить список групп\n"
+            + CALL_GROUP.getCommandName() + " - вызвать группу\n\n"
+            + "<b>Вспомогательные команды:</b>\n"
+            + STAT.getCommandName() + " - получить статистику пользователей\n"
+            + HELP.getCommandName() + " - получить помощь в работе со мной\n"
+            + "Автор: @Sky_Sheff ");
 
     public HelpCommand(SendBotMessageService sendBotMessageService) {
         this.sendBotMessageService = sendBotMessageService;
@@ -26,6 +35,6 @@ public class HelpCommand implements Command {
 
     @Override
     public void execute(Update update) {
-        sendBotMessageService.sendMessage(update.getMessage().getChatId().toString(), HELP_MESSAGE);
+        sendBotMessageService.sendMessage(update.getMessage().getChatId(), HELP_MESSAGE);
     }
 }
