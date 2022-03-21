@@ -11,9 +11,9 @@ public enum CommandName {
     NO("/no"),
     CREATE_GROUP("/create_group"),
     DELETE_GROUP("/delete_group"),
-    ADD_TO_GROUP("/add_to_group"),
-    DELETE_FROM_GROUP("/delete_from_group"),
     GET_GROUPS("/get_groups"),
+    GROUP_ADD("/group_add"),
+    GROUP_REMOVE("/group_remove"),
     CALL_GROUP("/call_group"),
     STAT("/stat");
 

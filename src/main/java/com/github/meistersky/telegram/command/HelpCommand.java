@@ -20,14 +20,14 @@ public class HelpCommand implements Command {
             + "<b>Функциональные команды:</b>\n"
             + CREATE_GROUP.getCommandName() + " - создать группу\n"
             + DELETE_GROUP.getCommandName() + " - удалить группу\n"
-            + ADD_TO_GROUP.getCommandName() + " - добавить пользователя в группу\n"
-            + DELETE_FROM_GROUP.getCommandName() + " - удалить пользователя из группы\n"
+            + GROUP_ADD.getCommandName() + " - добавить пользователя в группу\n"
+            + GROUP_REMOVE.getCommandName() + " - удалить пользователя из группы\n"
             + GET_GROUPS.getCommandName() + " - получить список групп\n"
             + CALL_GROUP.getCommandName() + " - вызвать группу\n\n"
             + "<b>Вспомогательные команды:</b>\n"
             + STAT.getCommandName() + " - получить статистику пользователей\n"
-            + HELP.getCommandName() + " - получить помощь в работе со мной\n"
-            + "Автор: @Sky_Sheff ";
+            + HELP.getCommandName() + " - получить помощь в работе со мной\n\n"
+            + "Автор данного бота: @Sky_Sheff ";
 
     public HelpCommand(SendBotMessageService sendBotMessageService) {
         this.sendBotMessageService = sendBotMessageService;

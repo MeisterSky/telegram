@@ -22,12 +22,18 @@ public class DeleteGroupCommand implements Command {
     private final UserGroupService userGroupService;
 
     public final static String DELETE_GROUP_MESSAGE_DONE = " ✅ группа удалена";
+
     public final static String DELETE_GROUP_MESSAGE_NOT_FOUND = " ⚠ группа не найдена";
-    public final static String GROUP_MESSAGE_EMPTY = "Пока нет никаких групп. Чтобы добавить группу, напиши /create_group и укажи название группы через пробел\n"
-            + "Например: /create_group TechSupport для создания группы с названием 'TechSupport'";
+
+    public final static String GROUP_MESSAGE_EMPTY = """
+            Пока нет никаких групп. Чтобы добавить группу, напиши /create_group и укажи название группы через пробел, например:
+            /create_group TechSupport
+            для создания группы с названием 'TechSupport'""";
+
     public final static String GROUP_MESSAGE_MANUAL = """
-            Чтобы удалить группу - передай команду вместе с названием группы.\s
-            Например: /delete_group TechSupport\s
+            Чтобы удалить группу - передай команду вместе с названием группы, например:\s
+            /delete_group %s\s
+                        
             Вот список всех групп для этого чата:\s
             """;
 
@@ -39,11 +45,11 @@ public class DeleteGroupCommand implements Command {
 
     @Override
     public void execute(Update update) {
-        if (getMessage(update).split(Constant.REGEX).length < 2) {
+        if (getMessage(update).split(Constant.REGEX_GROUP).length < 2) {
             sendGroupIdList(getChatId(update));
             return;
         }
-        String[] message = getMessage(update).split(Constant.REGEX);
+        String[] message = getMessage(update).split(Constant.REGEX_GROUP);
         String groupTitle = "";
         for (int i = 1; i < message.length; i++) {
             if (!message[i].isEmpty()) {
@@ -71,7 +77,7 @@ public class DeleteGroupCommand implements Command {
                     .map(group -> format("%s\n", group.getTitle()))
                     .collect(Collectors.joining());
 
-            message = GROUP_MESSAGE_MANUAL + userGroupData;
+            message = String.format(GROUP_MESSAGE_MANUAL, userGroups.get(0).getTitle()) + userGroupData;
         }
 
         sendBotMessageService.sendMessage(chatId, message);
