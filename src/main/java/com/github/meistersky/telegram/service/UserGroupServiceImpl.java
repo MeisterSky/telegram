@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,12 +41,48 @@ public class UserGroupServiceImpl implements UserGroupService {
     }
 
     @Override
-    public Optional<UserGroup> findById(Integer id) {
-        return Optional.empty();
+    public boolean isExist(Long chatId, String title) {
+        List<UserGroup> userGroupList = userGroupRepository.findAll();
+        for (UserGroup userGroups : userGroupList) {
+            if (userGroups.getChatId().equals(chatId) && userGroups.getTitle().equalsIgnoreCase(title)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
-    public List<UserGroup> findAll() {
+    public List<UserGroup> findAllByChatId(Long chatId) {
+        List<UserGroup> sourceUserGroupList = userGroupRepository.findAll();
+        List<UserGroup> destUserGroupList = new ArrayList<>();
+        for (UserGroup userGroups : sourceUserGroupList) {
+            if (userGroups.getChatId().equals(chatId)) {
+                destUserGroupList.add(userGroups);
+            }
+        }
+        return destUserGroupList;
+    }
+
+    @Override
+    public UserGroup findByTitle(Long chatId, String title) {
+        List<UserGroup> userGroupList = userGroupRepository.findAll();
+        for (UserGroup userGroups : userGroupList) {
+            if (userGroups.getChatId().equals(chatId)
+                    && userGroups.getTitle().trim().replaceAll("\s+", " ")
+                    .equalsIgnoreCase(title.trim().replaceAll("\s+", " "))) {
+                return userGroups;
+            }
+        }
         return null;
+    }
+
+    @Override
+    public Optional<UserGroup> findById(Integer id) {
+        return userGroupRepository.findById(id);
+    }
+
+    @Override
+    public void delete(UserGroup userGroup) {
+        userGroupRepository.delete(userGroup);
     }
 }

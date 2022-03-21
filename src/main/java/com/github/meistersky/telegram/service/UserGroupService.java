@@ -14,7 +14,13 @@ public interface UserGroupService {
 
     void save(UserGroup userGroup);
 
-    Optional<UserGroup> findById(Integer id);
+    void delete(UserGroup userGroup);
 
-    List<UserGroup> findAll();
+    boolean isExist(Long chatId, String title);
+
+    List<UserGroup> findAllByChatId(Long chatId);
+
+    UserGroup findByTitle(Long chatId, String title);
+
+    Optional<UserGroup> findById(Integer id);
 }

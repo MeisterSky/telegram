@@ -18,6 +18,9 @@ public class TelegramBot extends TelegramLongPollingBot {
     public static String COMMAND_PREFIX = "/";
 
     @Value("${bot.username}")
+    public static String BOT_NAME;
+
+    @Value("${bot.username}")
     private String username;
 
     @Value("${bot.token}")
