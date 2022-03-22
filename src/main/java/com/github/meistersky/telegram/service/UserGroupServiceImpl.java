@@ -41,7 +41,7 @@ public class UserGroupServiceImpl implements UserGroupService {
     }
 
     @Override
-    public boolean isExist(Long chatId, String title) {
+    public boolean isExistGroup(Long chatId, String title) {
         List<UserGroup> userGroupList = userGroupRepository.findAll();
         for (UserGroup userGroups : userGroupList) {
             if (userGroups.getChatId().equals(chatId) && userGroups.getTitle().equalsIgnoreCase(title)) {

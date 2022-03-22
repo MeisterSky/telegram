@@ -9,12 +9,12 @@ public enum CommandName {
     STOP("/stop"),
     HELP("/help"),
     NO("/no"),
-    CREATE_GROUP("/create_group"),
-    DELETE_GROUP("/delete_group"),
+    GROUP_CREATE("/group_create"),
+    GROUP_DELETE("/group_delete"),
     GET_GROUPS("/get_groups"),
-    GROUP_ADD("/group_add"),
-    GROUP_REMOVE("/group_remove"),
-    CALL_GROUP("/call_group"),
+    USER_ADD("/user_add"),
+    USER_REMOVE("/user_remove"),
+    CALL("/call"),
     STAT("/stat");
 
     private final String commandName;

@@ -15,9 +15,9 @@ import static com.github.meistersky.telegram.command.CommandUtils.getMessage;
 import static java.lang.String.format;
 
 /**
- * Delete Group {@link Command}.
+ * GroupDelete {@link Command}.
  */
-public class DeleteGroupCommand implements Command {
+public class GroupDeleteCommand implements Command {
     private final SendBotMessageService sendBotMessageService;
     private final UserGroupService userGroupService;
 
@@ -26,19 +26,18 @@ public class DeleteGroupCommand implements Command {
     public final static String DELETE_GROUP_MESSAGE_NOT_FOUND = " ⚠ группа не найдена";
 
     public final static String GROUP_MESSAGE_EMPTY = """
-            Пока нет никаких групп. Чтобы добавить группу, напиши /create_group и укажи название группы через пробел, например:
-            /create_group TechSupport
+            Пока нет никаких групп. Чтобы добавить группу, напиши /group_create и укажи название группы через пробел, например:
+            /group_create TechSupport
             для создания группы с названием 'TechSupport'""";
 
     public final static String GROUP_MESSAGE_MANUAL = """
             Чтобы удалить группу - передай команду вместе с названием группы, например:\s
-            /delete_group %s\s
+            /group_delete %s\s
                         
             Вот список всех групп для этого чата:\s
             """;
 
-
-    public DeleteGroupCommand(SendBotMessageService sendBotMessageService, UserGroupService groupSubService) {
+    public GroupDeleteCommand(SendBotMessageService sendBotMessageService, UserGroupService groupSubService) {
         this.sendBotMessageService = sendBotMessageService;
         this.userGroupService = groupSubService;
     }

@@ -16,7 +16,7 @@ public interface UserGroupService {
 
     void delete(UserGroup userGroup);
 
-    boolean isExist(Long chatId, String title);
+    boolean isExistGroup(Long chatId, String title);
 
     List<UserGroup> findAllByChatId(Long chatId);
 

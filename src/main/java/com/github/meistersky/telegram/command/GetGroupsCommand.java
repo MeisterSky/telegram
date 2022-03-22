@@ -14,17 +14,20 @@ import static com.github.meistersky.telegram.command.CommandUtils.getChatId;
 import static com.github.meistersky.telegram.command.CommandUtils.getMessage;
 import static java.lang.String.format;
 
+/**
+ * GetGroups {@link Command}.
+ */
 public class GetGroupsCommand implements Command {
 
     private final SendBotMessageService sendBotMessageService;
     private final UserGroupService userGroupService;
 
     public final static String GROUP_MESSAGE_EMPTY = """
-            Пока нет никаких групп. Чтобы добавить группу, напиши /create_group и укажи название группы через пробел, например:
-            /create_group TechSupport
+            Пока нет никаких групп. Чтобы добавить группу, напиши /group_create и укажи название группы через пробел, например:
+            /group_create TechSupport
              для создания группы с названием 'TechSupport'""";
 
-    public final static String GROUP_MESSAGE_ALL_GROUPS = "Вот список всех групп для этого чата:\n%s";
+    public final static String GROUP_MESSAGE_ALL_GROUPS = "Вот список всех групп и их пользователей для этого чата:\n\n%s";
 
     public GetGroupsCommand(SendBotMessageService sendBotMessageService, UserGroupService userGroupService) {
         this.sendBotMessageService = sendBotMessageService;
@@ -41,7 +44,7 @@ public class GetGroupsCommand implements Command {
                 message = GROUP_MESSAGE_EMPTY;
             } else {
                 String userGroupData = userGroups.stream()
-                        .map(group -> format("%s\n", group.getTitle()))
+                        .map(group -> format("%s:\n%s\t\n", group.getTitle(), group.getUsers()))
                         .collect(Collectors.joining());
 
                 message = String.format(GROUP_MESSAGE_ALL_GROUPS, userGroupData);

@@ -9,16 +9,16 @@ import static com.github.meistersky.telegram.command.CommandUtils.getChatId;
 import static com.github.meistersky.telegram.command.CommandUtils.getMessage;
 
 /**
- * CreateGroup {@link Command}.
+ * GroupCreate {@link Command}.
  */
-public class CreateGroupCommand implements Command {
+public class GroupCreateCommand implements Command {
 
     private final SendBotMessageService sendBotMessageService;
     private final UserGroupService userGroupService;
 
     public final static String CREATE_GROUP_MESSAGE_TITLE = """
             Чтобы создать группу - передай команду и укажи название группы через пробел в одно слово, например:
-            /create_group TechSupport
+            /group_create TechSupport
              для создания группы с названием 'TechSupport'""";
 
     public final static String CREATE_GROUP_MESSAGE_DONE = " ✅ группа создана";
@@ -37,7 +37,7 @@ public class CreateGroupCommand implements Command {
                 sb.append(stringArray[i]);
             }
             String groupTitle = sb.toString();
-            if (userGroupService.isExist(chatId, groupTitle)) {
+            if (userGroupService.isExistGroup(chatId, groupTitle)) {
                 sendBotMessageService.sendMessage(chatId, groupTitle + CREATE_GROUP_MESSAGE_IS_PRESENT);
             } else {
                 String users = "";
@@ -47,7 +47,7 @@ public class CreateGroupCommand implements Command {
         }
     }
 
-    public CreateGroupCommand(SendBotMessageService sendBotMessageService, UserGroupService userGroupService) {
+    public GroupCreateCommand(SendBotMessageService sendBotMessageService, UserGroupService userGroupService) {
         this.sendBotMessageService = sendBotMessageService;
         this.userGroupService = userGroupService;
     }
