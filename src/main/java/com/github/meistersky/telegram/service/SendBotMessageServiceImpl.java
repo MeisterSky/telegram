@@ -42,9 +42,12 @@ public class SendBotMessageServiceImpl implements SendBotMessageService {
     }
 
     @Override
-    public void sendMessage(Long chatId, List<String> messages) {
-        if (isEmpty(messages)) return;
-
-        messages.forEach(m -> sendMessage(chatId, m));
+    public void sendMessage(SendMessage message) {
+        try {
+            telegramBot.execute(message);
+        } catch (TelegramApiException e) {
+            //todo add logging to the project.
+            e.printStackTrace();
+        }
     }
 }

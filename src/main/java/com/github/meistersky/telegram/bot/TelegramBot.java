@@ -35,12 +35,15 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+//        if (update.hasCallbackQuery()) {
+//            commandContainer.findCommand("/call " + update.getCallbackQuery()).execute(update);
+//            return;
+//        }
         if (update.hasMessage() && update.getMessage().hasText()) {
             String message = update.getMessage().getText().trim();
             if (message.startsWith(COMMAND_PREFIX)) {
                 String commandIdentifier = message.split(Constant.REGEX_GROUP)[0].toLowerCase();
                 commandContainer.findCommand(commandIdentifier).execute(update);
-
             } else {
                 commandContainer.findCommand(NO.getCommandName()).execute(update);
             }

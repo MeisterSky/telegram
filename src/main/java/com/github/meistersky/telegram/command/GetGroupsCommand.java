@@ -44,7 +44,7 @@ public class GetGroupsCommand implements Command {
                 message = GROUP_MESSAGE_EMPTY;
             } else {
                 String userGroupData = userGroups.stream()
-                        .map(group -> format("%s:\n%s\t\n", group.getTitle(), group.getUsers()))
+                        .map(group -> format("<b>%s</b>:\n%s\n\n", group.getTitle(), group.getUsers().replace('@', ' ')))
                         .collect(Collectors.joining());
 
                 message = String.format(GROUP_MESSAGE_ALL_GROUPS, userGroupData);

@@ -1,6 +1,6 @@
 package com.github.meistersky.telegram.service;
 
-import java.util.List;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 /**
  * Service for sending messages via telegram-bot.
@@ -18,8 +18,7 @@ public interface SendBotMessageService {
     /**
      * Send messages via telegram bot.
      *
-     * @param chatId  provided chatId in which would be sent.
-     * @param message collection of provided messages to be sent.
+     * @param message provided finished message from the provided messages to send.
      */
-    void sendMessage(Long chatId, List<String> message);
+    void sendMessage(SendMessage message);
 }
