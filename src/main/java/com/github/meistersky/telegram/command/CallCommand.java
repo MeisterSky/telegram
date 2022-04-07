@@ -5,6 +5,8 @@ import com.github.meistersky.telegram.repository.entity.UserGroup;
 import com.github.meistersky.telegram.service.SendBotMessageService;
 import com.github.meistersky.telegram.service.UserGroupService;
 import org.springframework.util.CollectionUtils;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -36,32 +38,48 @@ public class CallCommand implements Command {
 
     @Override
     public void execute(Update update) {
-        Long chatId = getChatId(update);
+
+        Long chatId;
+
+        if (update.hasCallbackQuery()) {
+            CallbackQuery callbackQuery = update.getCallbackQuery();
+            chatId = callbackQuery.getMessage().getChatId();
+            UserGroup userGroup = userGroupService.findByTitle(chatId, callbackQuery.getData());
+            sendBotMessageService.sendMessage(chatId, userGroup.getTitle() + " \uD83D\uDD0A " + userGroup.getUsers());
+            return;
+        }
+
+        chatId = getChatId(update);
+
         if (getMessage(update).split(Constant.REGEX_GROUP).length < 2) {
             List<UserGroup> userGroups = userGroupService.findAllByChatId(chatId);
             if (CollectionUtils.isEmpty(userGroups)) {
                 sendBotMessageService.sendMessage(chatId, GROUP_MESSAGE_EMPTY);
             } else {
-//                SendMessage message = new SendMessage();
-//                message.setChatId(chatId.toString());
-//                message.setText("Вызываю");
-//                InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-//                InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-//                InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
-//                inlineKeyboardButton1.setText("Тык");
-//                inlineKeyboardButton1.setCallbackData("/call");
-//                inlineKeyboardButton2.setText("Тык2");
-//                inlineKeyboardButton2.setCallbackData("/call QA");
-//                List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-//                List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
-//                keyboardButtonsRow1.add(inlineKeyboardButton1);
-//                keyboardButtonsRow2.add(inlineKeyboardButton2);
-//                List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-//                rowList.add(keyboardButtonsRow1);
-//                rowList.add(keyboardButtonsRow2);
-//                inlineKeyboardMarkup.setKeyboard(rowList);
-//                message.setReplyMarkup(inlineKeyboardMarkup);
-//                sendBotMessageService.sendMessage(message);
+
+                SendMessage message = new SendMessage();
+                message.setChatId(chatId.toString());
+                message.setText("Кого вызвать?");
+
+                InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+                List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+
+                for (int i = 0; i < userGroups.size(); i++) {
+                    String title = userGroups.get(i).getTitle();
+                    InlineKeyboardButton button = new InlineKeyboardButton();
+                    button.setText(title);
+                    button.setCallbackData(title);
+                    List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>(1);
+                    inlineKeyboardButtons.add(button);
+                    rowList.add(inlineKeyboardButtons);
+                }
+
+                inlineKeyboardMarkup.setKeyboard(rowList);
+
+                message.setReplyMarkup(inlineKeyboardMarkup);
+
+                sendBotMessageService.sendMessage(message);
+
 
             }
         } else if (getMessage(update).split(Constant.REGEX_GROUP).length > 1) {
