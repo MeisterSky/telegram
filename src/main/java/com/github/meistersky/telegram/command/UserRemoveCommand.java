@@ -24,7 +24,7 @@ public class UserRemoveCommand implements Command {
     public final static String GROUP_REMOVE_MESSAGE_TITLE =
             "Чтобы удалить пользователей из группы - передай команду, укажи через пробел название группы и "
                     + "перечисли пользователей (тоже через пробел), например:\n"
-                    + "/user_remove TechSupport @Support911 @Telegram @PavelDurovs";
+                    + "/user_remove TechSupport @Support911 @Telegram";
 
     public final static String GROUP_REMOVE_MESSAGE_DONE = "удалил из группы ✅ ";
 

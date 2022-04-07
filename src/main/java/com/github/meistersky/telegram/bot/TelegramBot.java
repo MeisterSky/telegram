@@ -36,6 +36,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasCallbackQuery()) {
+
             commandContainer.findCommand("/call").execute(update);
         } else if (update.hasMessage() && update.getMessage().hasText()) {
             String message = update.getMessage().getText().trim();

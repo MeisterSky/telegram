@@ -1,6 +1,5 @@
 package com.github.meistersky.telegram.repository;
 
-//import com.github.meistersky.telegram.repository.entity.GroupSub;
 import com.github.meistersky.telegram.repository.entity.TelegramUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
@@ -46,7 +44,7 @@ public class TelegramUserRepositoryIT {
         telegramUserRepository.save(telegramUser);
 
         //when
-        Optional<TelegramUser> saved = telegramUserRepository.findById(telegramUser.getChatId());
+        Optional<TelegramUser> saved = telegramUserRepository.findById(Long.parseLong(telegramUser.getChatId().toString()));
 
         //then
         Assertions.assertTrue(saved.isPresent());
