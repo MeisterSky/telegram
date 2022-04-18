@@ -42,6 +42,7 @@ public class CallCommand implements Command {
             if (CollectionUtils.isEmpty(userGroups)) {
                 sendBotMessageService.sendMessage(chatId, GROUP_MESSAGE_EMPTY);
             } else {
+                sendBotMessageService.sendMessage(chatId, "Чтобы вызвать группу пользователей, введи /call и имя группы, например:\n/call TechSupport");
 //                SendMessage message = new SendMessage();
 //                message.setChatId(chatId.toString());
 //                message.setText("Вызываю");
