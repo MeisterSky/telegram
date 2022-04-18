@@ -17,7 +17,7 @@ import java.util.List;
 import static com.github.meistersky.telegram.command.CommandUtils.getChatId;
 import static com.github.meistersky.telegram.command.CommandUtils.getMessage;
 
-public class CallCommand implements Command {
+public class CallAllCommand implements Command {
 
     private final SendBotMessageService sendBotMessageService;
     private final UserGroupService userGroupService;
@@ -27,16 +27,15 @@ public class CallCommand implements Command {
             /group_create TechSupport
              для создания группы с названием 'TechSupport'""";
 
-    public final static String CALL_GROUP_MESSAGE_NOT_FOUND = " ⚠ группа не найдена";
 
-
-    public CallCommand(SendBotMessageService sendBotMessageService, UserGroupService userGroupService) {
+    public CallAllCommand(SendBotMessageService sendBotMessageService, UserGroupService userGroupService) {
         this.sendBotMessageService = sendBotMessageService;
         this.userGroupService = userGroupService;
     }
 
     @Override
     public void execute(Update update) {
+
 
         Long chatId;
 
@@ -49,6 +48,7 @@ public class CallCommand implements Command {
         }
 
         chatId = getChatId(update);
+
 
         if (getMessage(update).split(Constant.REGEX_GROUP).length < 2) {
             List<UserGroup> userGroups = userGroupService.findAllByChatId(chatId);
@@ -77,6 +77,7 @@ public class CallCommand implements Command {
 
                 message.setReplyMarkup(inlineKeyboardMarkup);
 
+
                 sendBotMessageService.sendMessage(message);
 
 
@@ -87,8 +88,6 @@ public class CallCommand implements Command {
                 if (userGroupService.isExistGroup(chatId, groupTitles[i])) {
                     UserGroup userGroup = userGroupService.findByTitle(chatId, groupTitles[i]);
                     sendBotMessageService.sendMessage(chatId, userGroup.getTitle() + " \uD83D\uDD0A " + userGroup.getUsers());
-                } else {
-                    sendBotMessageService.sendMessage(chatId, groupTitles[i] + CALL_GROUP_MESSAGE_NOT_FOUND);
                 }
             }
         }

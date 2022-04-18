@@ -32,11 +32,11 @@ public class GroupCreateCommand implements Command {
             sendBotMessageService.sendMessage(chatId, CREATE_GROUP_MESSAGE_TITLE);
         } else if (getMessage(update).split(Constant.REGEX_GROUP).length > 1) {
             String[] stringArray = getMessage(update).split(Constant.REGEX_GROUP);
-            StringBuilder sb = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
             for (int i = 1; i < stringArray.length; i++) {
-                sb.append(stringArray[i]);
+                stringBuilder.append(stringArray[i]);
             }
-            String groupTitle = sb.toString();
+            String groupTitle = stringBuilder.toString();
             if (userGroupService.isExistGroup(chatId, groupTitle)) {
                 sendBotMessageService.sendMessage(chatId, groupTitle + CREATE_GROUP_MESSAGE_IS_PRESENT);
             } else {

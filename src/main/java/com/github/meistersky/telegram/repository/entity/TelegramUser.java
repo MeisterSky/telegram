@@ -19,3 +19,4 @@ public class TelegramUser {
     @Column(name = "active")
     private boolean active;
 }
+

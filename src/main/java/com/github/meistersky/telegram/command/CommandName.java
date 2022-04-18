@@ -15,7 +15,8 @@ public enum CommandName {
     USER_ADD("/user_add"),
     USER_REMOVE("/user_remove"),
     CALL("/call"),
-    STAT("/stat");
+    STAT("/stat"),
+    ALL("@All");
 
     private final String commandName;
 

@@ -13,11 +13,13 @@ public class SendBotMessageServiceTest {
 
     private SendBotMessageService sendBotMessageService;
     private TelegramBot javarushBot;
+    private TelegramUserService telegramUserService;
 
     @BeforeEach
     public void init() {
         javarushBot = Mockito.mock(TelegramBot.class);
-        sendBotMessageService = new SendBotMessageServiceImpl(javarushBot);
+        telegramUserService = Mockito.mock(TelegramUserService.class);
+        sendBotMessageService = new SendBotMessageServiceImpl(javarushBot, telegramUserService);
     }
 
     @Test

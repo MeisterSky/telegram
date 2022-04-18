@@ -30,6 +30,7 @@ public class CommandContainer {
                 .put(USER_REMOVE.getCommandName(), new UserRemoveCommand(sendBotMessageService, userGroupService))
                 .put(GET_GROUPS.getCommandName(), new GetGroupsCommand(sendBotMessageService, userGroupService))
                 .put(CALL.getCommandName(), new CallCommand(sendBotMessageService, userGroupService))
+                .put(ALL.getCommandName(), new CallCommand(sendBotMessageService, userGroupService))
                 .build();
 
         unknownCommand = new UnknownCommand(sendBotMessageService);
